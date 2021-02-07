@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CLKSTA_SPEC","This register you can `read`. See API."],["EXTON_R","Field `EXTON` reader - "],["R","Register `CLKSTA` reader"],["RCON_R","Field `RCON` reader - "]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["DataOrder","Order of data transmission, either MSB first or LSB first"],["SerialClockRate","Oscillator Clock Frequency division options."]],"struct":[["Settings","Settings to pass to Spi."]]});

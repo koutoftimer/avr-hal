@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["EIND_SPEC","Extended Indirect Register"],["R","Register `EIND` reader"],["W","Register `EIND` writer"]]});

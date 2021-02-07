@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FOC4A_W","Field `FOC4A` writer - Force Output Compare 4A"],["FOC4B_W","Field `FOC4B` writer - Force Output Compare 4B"],["FOC4C_W","Field `FOC4C` writer - Force Output Compare 4C"],["TCCR4C_SPEC","Timer/Counter 4 Control Register C"],["W","Register `TCCR4C` writer"]]});

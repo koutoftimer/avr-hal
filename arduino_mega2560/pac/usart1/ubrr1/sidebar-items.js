@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `UBRR1` reader"],["UBRR1_SPEC","USART Baud Rate Register Bytes"],["W","Register `UBRR1` writer"]]});

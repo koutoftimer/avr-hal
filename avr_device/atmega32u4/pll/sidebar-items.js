@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["pllcsr","PLL Status and Control register"],["pllfrq","PLL Frequency Control Register"]],"struct":[["RegisterBlock","Register block"]],"type":[["PLLCSR","PLLCSR register accessor: an alias for `Reg<PLLCSR_SPEC>`"],["PLLFRQ","PLLFRQ register accessor: an alias for `Reg<PLLFRQ_SPEC>`"]]});

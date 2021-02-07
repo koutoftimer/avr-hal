@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["OCF2A_R","Field `OCF2A` reader - Output Compare Flag 2A"],["OCF2B_R","Field `OCF2B` reader - Output Compare Flag 2B"],["R","Register `TIFR2` reader"],["TIFR2_SPEC","Timer/Counter Interrupt Flag Register"],["TOV2_R","Field `TOV2` reader - Timer/Counter2 Overflow Flag"]]});

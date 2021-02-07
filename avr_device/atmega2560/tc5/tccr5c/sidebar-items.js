@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FOC5A_W","Field `FOC5A` writer - Force Output Compare 5A"],["FOC5B_W","Field `FOC5B` writer - Force Output Compare 5B"],["FOC5C_W","Field `FOC5C` writer - Force Output Compare 5C"],["TCCR5C_SPEC","Timer/Counter 5 Control Register C"],["W","Register `TCCR5C` writer"]]});

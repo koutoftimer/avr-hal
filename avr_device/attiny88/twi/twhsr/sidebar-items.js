@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `TWHSR` reader"],["TWHSR_SPEC","TWHSR"],["TWHS_R","Field `TWHS` reader - "],["TWHS_W","Field `TWHS` writer - "],["W","Register `TWHSR` writer"]]});

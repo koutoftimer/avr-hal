@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Gnd","Channel for GND"],["Temperature","Channel for the built-in Temperature Sensor"],["Vbg","Channel for the Bandgap Reference Voltage"]]});

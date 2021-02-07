@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `UHWCON` reader"],["UHWCON_SPEC","This register you can `read`, `write_with_zero`, `reset`, `write`, `modify`. See API."],["UVREGE_R","Field `UVREGE` reader - "],["UVREGE_W","Field `UVREGE` writer - "],["W","Register `UHWCON` writer"]]});

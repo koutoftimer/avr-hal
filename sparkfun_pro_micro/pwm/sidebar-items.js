@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Prescaler","Clock prescaler for PWM"]],"struct":[["Timer0Pwm","Use `TC0` for PWM (pins `PB7`, `PD0`)"],["Timer1Pwm","Use `TC1` for PWM (pins `PB5`, `PB6`, `PB7`)"],["Timer3Pwm","Use `TC3` for PWM (pin `PC6`)"],["Timer4Pwm","Use `TC4` for PWM (pins `PB6`, `PC7`, `PD7`)"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PC6_R","Field `PC6` reader - Pin C6"],["PC6_W","Field `PC6` writer - Pin C6"],["PC7_R","Field `PC7` reader - Pin C7"],["PC7_W","Field `PC7` writer - Pin C7"],["PORTC_SPEC","Port C Data Register"],["R","Register `PORTC` reader"],["W","Register `PORTC` writer"]]});

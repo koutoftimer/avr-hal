@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PCIF0_R","Field `PCIF0` reader - Pin Change Interrupt Flag 0"],["PCIFR_SPEC","Pin Change Interrupt Flag Register"],["R","Register `PCIFR` reader"]]});

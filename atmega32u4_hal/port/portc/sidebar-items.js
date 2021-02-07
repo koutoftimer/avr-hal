@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DDR",""],["PC6","Type representing a specific pin."],["PC7","Type representing a specific pin."],["Parts",""]],"trait":[["AsDDR","Marker trait for types that can be used as DDR"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["JTD_R","Field `JTD` reader - JTAG Interface Disable"],["JTD_W","Field `JTD` writer - JTAG Interface Disable"],["MCUCR_SPEC","MCU Control Register"],["R","Register `MCUCR` reader"],["W","Register `MCUCR` writer"]]});

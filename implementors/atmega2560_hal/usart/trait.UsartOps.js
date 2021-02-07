@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["atmega2560_hal"] = [{"text":"impl UsartOps&lt;PE0&lt;Input&lt;Floating&gt;&gt;, PE1&lt;Output&gt;&gt; for USART0","synthetic":false,"types":[]},{"text":"impl UsartOps&lt;PD2&lt;Input&lt;Floating&gt;&gt;, PD3&lt;Output&gt;&gt; for USART1","synthetic":false,"types":[]},{"text":"impl UsartOps&lt;PH0&lt;Input&lt;Floating&gt;&gt;, PH1&lt;Output&gt;&gt; for USART2","synthetic":false,"types":[]},{"text":"impl UsartOps&lt;PJ0&lt;Input&lt;Floating&gt;&gt;, PJ1&lt;Output&gt;&gt; for USART3","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `arduino_uno` crate."><meta name="keywords" content="rust, rustlang, rust-lang, arduino_uno"><title>arduino_uno - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../arduino_uno/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate arduino_uno</p><div class="block version"><p>Version 0.1.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all arduino_uno's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class="location"></p><script>window.sidebarCurrent = {name: "arduino_uno", ty: "mod", relpath: "../"};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/arduino_uno/lib.rs.html#1-248" title="goto source code">[src]</a></span><span class="in-band">Crate <a class="mod" href="">arduino_uno</a></span></h1><div class="docblock"><p>Board Support Crate for <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino Uno</a> (and compatible boards; <a href="#compatible-boards">see below</a>).</p>
+<p>This crate provides abstractions for interfacing with the hardware of Arduino Uno.  It
+re-exports functionality from the underlying HAL in ways that make more sense for this
+particular board.  For example, the pins are named by what is printed on the PCB instead of the
+MCU names.</p>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+<p>A number of examples can be found in the <a href="https://github.com/Rahix/avr-hal/tree/master/boards/arduino-uno/examples"><code>examples/</code></a> subdirectory of this crate.</p>
+<h1 id="getting-started" class="section-header"><a href="#getting-started">Getting Started</a></h1>
+<p>Please follow the guide from <a href="https://github.com/Rahix/avr-hal#starting-your-own-project"><code>avr-hal</code>'s README</a> for steps on how to set up a project
+with this board.  A rough skeleton for an application looks like this:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
+<span class="attribute">#![<span class="ident">no_main</span>]</span>
+
+<span class="comment">// Pull in the panic handler from panic-halt</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">panic_halt</span>;
+
+<span class="comment">// The prelude just exports all HAL traits anonymously which makes</span>
+<span class="comment">// all trait methods available.  This is probably something that</span>
+<span class="comment">// should always be added.</span>
+<span class="kw">use</span> <span class="ident">arduino_uno</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+
+<span class="comment">// Define the entry-point for the application.  This can only be</span>
+<span class="comment">// done once in the entire dependency tree.</span>
+<span class="attribute">#[<span class="ident">arduino_uno</span>::<span class="ident">entry</span>]</span>
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="op">!</span> {
+    <span class="comment">// Get the peripheral singletons for interacting with them.</span>
+    <span class="kw">let</span> <span class="ident">dp</span> <span class="op">=</span> <span class="ident">arduino_uno</span>::<span class="ident">Peripherals</span>::<span class="ident">take</span>().<span class="ident">unwrap</span>();
+
+    <span class="macro">unimplemented</span><span class="macro">!</span>()
+}</pre></div>
+<h1 id="compatible-boards" class="section-header"><a href="#compatible-boards">Compatible Boards</a></h1>
+<p>This crate primarily targets <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino Uno</a> but is also compatible with a number of very similar
+boards.  Where there are differences, those can be enabled with a crate feature.  Here is an
+overview:</p>
+<table><thead><tr><th>Feature</th><th>Board</th><th>Differences against Uno</th></tr></thead><tbody>
+<tr><td><code>arduino-nano</code></td><td><a href="https://store.arduino.cc/arduino-nano">Arduino Nano</a></td><td>Additional <code>ADC6</code> and <code>ADC7</code> pins/channels (see <a href="https://github.com/Rahix/avr-hal/blob/master/boards/arduino-uno/examples/uno-adc.rs"><code>examples/uno-adc.rs</code></a>)</td></tr>
+</tbody></table>
+</div><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use <a class="mod" href="../atmega328p_hal/index.html" title="mod atmega328p_hal">atmega328p_hal</a> as hal;</code></td></tr></table><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<table><tr class="module-item"><td><a class="mod" href="adc/index.html" title="arduino_uno::adc mod">adc</a></td><td class="docblock-short"><p>Support for the Analog to Digital Converter</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="pac/index.html" title="arduino_uno::pac mod">pac</a></td><td class="docblock-short"><p><a href="https://www.microchip.com/wwwproducts/en/ATmega328P">ATmega328P</a></p>
+</td></tr><tr class="module-item"><td><a class="mod" href="prelude/index.html" title="arduino_uno::prelude mod">prelude</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="pwm/index.html" title="arduino_uno::pwm mod">pwm</a></td><td class="docblock-short"><p>Support for PWM pins</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="spi/index.html" title="arduino_uno::spi mod">spi</a></td><td class="docblock-short"><p>Support for the Serial Peripheral Interface</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="wdt/index.html" title="arduino_uno::wdt mod">wdt</a></td><td class="docblock-short"><p>Support for the WatchDog Timer</p>
+</td></tr></table><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.DDR.html" title="arduino_uno::DDR struct">DDR</a></td><td class="docblock-short"><p>Generic DDR that works for all ports</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Peripherals.html" title="arduino_uno::Peripherals struct">Peripherals</a></td><td class="docblock-short"><p>All the peripherals</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Pins.html" title="arduino_uno::Pins struct">Pins</a></td><td class="docblock-short"><p>Reexport of the Uno's pins, with the names they have on the board</p>
+</td></tr></table><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<table><tr class="module-item"><td><a class="fn" href="fn.delay_ms.html" title="arduino_uno::delay_ms fn">delay_ms</a></td><td class="docblock-short"><p>Wait (busy spin) for <code>ms</code> milliseconds</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.delay_us.html" title="arduino_uno::delay_us fn">delay_us</a></td><td class="docblock-short"><p>Wait (busy spin) for <code>us</code> microseconds</p>
+</td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<table><tr class="module-item"><td><a class="type" href="type.Delay.html" title="arduino_uno::Delay type">Delay</a></td><td class="docblock-short"><p>Busy-Delay</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.I2cMaster.html" title="arduino_uno::I2cMaster type">I2cMaster</a></td><td class="docblock-short"><p>I2C Master on pins <code>A4</code> (SDA) and <code>A5</code> (SCL)</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.Serial.html" title="arduino_uno::Serial type">Serial</a></td><td class="docblock-short"><p>Serial (UART) interface on pins <code>D0</code> (RX) and <code>D1</code> (TX)</p>
+</td></tr></table><h2 id="attributes" class="section-header"><a href="#attributes">Attribute Macros</a></h2>
+<table><tr class="module-item"><td><a class="attr" href="attr.entry.html" title="arduino_uno::entry attr">entry</a></td><td class="docblock-short"><p>See <a href="https://docs.rs/avr-device/latest/avr_device/attr.entry.html"><code>avr_device::entry</code></a>.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "arduino_uno";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

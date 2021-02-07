@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["entry","See `avr_device::entry`."]],"mod":[["pac","ATmega1280"],["prelude",""]],"struct":[["Peripherals","All the peripherals"]],"type":[["Delay",""],["I2cMaster",""],["Serial",""]]});

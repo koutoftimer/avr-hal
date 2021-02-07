@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["GPIOR1_SPEC","General Purpose IO Register 1"],["GPIOR_R","Field `GPIOR` reader - General Purpose IO Register 1 bis"],["GPIOR_W","Field `GPIOR` writer - General Purpose IO Register 1 bis"],["R","Register `GPIOR1` reader"],["W","Register `GPIOR1` writer"]]});

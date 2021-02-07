@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DAT_R","Field `DAT` reader - "],["DAT_W","Field `DAT` writer - "],["R","Register `UEDATX` reader"],["UEDATX_SPEC","This register you can `read`, `write_with_zero`, `reset`, `write`, `modify`. See API."],["W","Register `UEDATX` writer"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `TC4H` reader"],["TC4H_SPEC","Timer/Counter High Bits"],["W","Register `TC4H` writer"]]});

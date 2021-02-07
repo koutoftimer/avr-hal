@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BORF_R","Field `BORF` reader - Brown-out Reset Flag"],["EXTRF_R","Field `EXTRF` reader - External Reset Flag"],["JTRF_R","Field `JTRF` reader - JTAG Reset Flag"],["MCUSR_SPEC","MCU Status Register"],["PORF_R","Field `PORF` reader - Power-on reset flag"],["R","Register `MCUSR` reader"],["WDRF_R","Field `WDRF` reader - Watchdog Reset Flag"]]});

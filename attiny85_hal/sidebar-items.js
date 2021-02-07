@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["entry","See `avr_device::entry`."]],"mod":[["clock","Generic trait for clock speeds"],["delay","Delay implementations"],["pac","Reexport of `attiny85` from `avr-device`"],["port","Digital IO Implementations"],["prelude",""]]});

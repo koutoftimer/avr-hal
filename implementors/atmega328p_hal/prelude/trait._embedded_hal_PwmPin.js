@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["atmega328p_hal"] = [{"text":"impl PwmPin for PD6&lt;Pwm&lt;Timer0Pwm&gt;&gt;","synthetic":false,"types":[]},{"text":"impl PwmPin for PD5&lt;Pwm&lt;Timer0Pwm&gt;&gt;","synthetic":false,"types":[]},{"text":"impl PwmPin for PB1&lt;Pwm&lt;Timer1Pwm&gt;&gt;","synthetic":false,"types":[]},{"text":"impl PwmPin for PB2&lt;Pwm&lt;Timer1Pwm&gt;&gt;","synthetic":false,"types":[]},{"text":"impl PwmPin for PB3&lt;Pwm&lt;Timer2Pwm&gt;&gt;","synthetic":false,"types":[]},{"text":"impl PwmPin for PD3&lt;Pwm&lt;Timer2Pwm&gt;&gt;","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

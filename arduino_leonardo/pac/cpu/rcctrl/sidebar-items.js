@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `RCCTRL` reader"],["RCCTRL_SPEC","Oscillator Control Register"],["RCFREQ_R","Field `RCFREQ` reader - "],["RCFREQ_W","Field `RCFREQ` writer - "],["W","Register `RCCTRL` writer"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Gnd","Channel for GND"],["Vbg","Channel for the Bandgap Reference Voltage"]]});

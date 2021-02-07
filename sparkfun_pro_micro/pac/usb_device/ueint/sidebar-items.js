@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["R","Register `UEINT` reader"],["UEINT_SPEC","This register you can `read`, `write_with_zero`, `reset`, `write`, `modify`. See API."],["W","Register `UEINT` writer"]]});

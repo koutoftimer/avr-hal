@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["OCF4A_R","Field `OCF4A` reader - Output Compare Flag 4A"],["OCF4B_R","Field `OCF4B` reader - Output Compare Flag 4B"],["OCF4D_R","Field `OCF4D` reader - Output Compare Flag 4D"],["R","Register `TIFR4` reader"],["TIFR4_SPEC","Timer/Counter4 Interrupt Flag register"],["TOV4_R","Field `TOV4` reader - Timer/Counter4 Overflow Flag"]]});

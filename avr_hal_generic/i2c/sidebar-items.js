@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Direction","I2C Transfer Direction"],["Error","I2C Error"]],"mod":[["twi_status","TWI Status Codes"]]});

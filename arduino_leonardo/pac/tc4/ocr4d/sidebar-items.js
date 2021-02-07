@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["OCR4D_SPEC","Timer/Counter4 Output Compare Register D"],["R","Register `OCR4D` reader"],["W","Register `OCR4D` writer"]]});

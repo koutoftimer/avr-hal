@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ADDEN_R","Field `ADDEN` reader - "],["ADDEN_W","Field `ADDEN` writer - "],["R","Register `UDADDR` reader"],["UADD_R","Field `UADD` reader - "],["UADD_W","Field `UADD` writer - "],["UDADDR_SPEC","This register you can `read`, `write_with_zero`, `reset`, `write`, `modify`. See API."],["W","Register `UDADDR` writer"]]});

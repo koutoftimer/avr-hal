@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CLKSEL1_SPEC","This register you can `read`, `write_with_zero`, `reset`, `write`, `modify`. See API."],["EXCKSEL_R","Field `EXCKSEL` reader - "],["EXCKSEL_W","Field `EXCKSEL` writer - "],["R","Register `CLKSEL1` reader"],["RCCKSEL_R","Field `RCCKSEL` reader - "],["RCCKSEL_W","Field `RCCKSEL` writer - "],["W","Register `CLKSEL1` writer"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CLKPS_A","Clock Prescaler Select Bits"]],"struct":[["CLKPCE_R","Field `CLKPCE` reader - Clock Prescaler Change Enable"],["CLKPR_SPEC","Clock Prescale Register"],["CLKPS_R","Field `CLKPS` reader - Clock Prescaler Select Bits"],["R","Register `CLKPR` reader"]]});

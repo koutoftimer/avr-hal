@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["entry","See `avr_device::entry`."]],"mod":[["pac","ATtiny85"],["prelude",""]],"struct":[["DDR","Generic DDR (not strictly necessary for ATtiny85)"],["Peripherals","All the peripherals"],["Pins","Reexport of the pins with names as on the Trinket board"]],"type":[["Delay",""]]});

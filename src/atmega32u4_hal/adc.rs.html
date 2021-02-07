@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `chips/atmega32u4-hal/src/adc.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>adc.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../atmega32u4_hal/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">port</span>::<span class="ident">portb</span>::{<span class="ident">PB4</span>, <span class="ident">PB5</span>, <span class="ident">PB6</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">port</span>::<span class="ident">portd</span>::{<span class="ident">PD4</span>, <span class="ident">PD6</span>, <span class="ident">PD7</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">port</span>::<span class="ident">portf</span>::{<span class="ident">PF0</span>, <span class="ident">PF1</span>, <span class="ident">PF4</span>, <span class="ident">PF5</span>, <span class="ident">PF6</span>, <span class="ident">PF7</span>};
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">avr_hal_generic</span>::<span class="ident">adc</span>::<span class="kw-2">*</span>;
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">AdcMux</span> {
+    <span class="ident">Adc0</span> <span class="op">=</span> <span class="number">0b000000</span>,
+    <span class="ident">Adc1</span> <span class="op">=</span> <span class="number">0b000001</span>,
+    <span class="ident">Adc4</span> <span class="op">=</span> <span class="number">0b000100</span>,
+    <span class="ident">Adc5</span> <span class="op">=</span> <span class="number">0b000101</span>,
+    <span class="ident">Adc6</span> <span class="op">=</span> <span class="number">0b000110</span>,
+    <span class="ident">Adc7</span> <span class="op">=</span> <span class="number">0b000111</span>,
+
+    <span class="ident">AdcVbg</span> <span class="op">=</span> <span class="number">0b011110</span>,
+    <span class="ident">AdcGnd</span> <span class="op">=</span> <span class="number">0b011111</span>,
+
+    <span class="ident">Adc8</span> <span class="op">=</span> <span class="number">0b100000</span>,
+    <span class="ident">Adc9</span> <span class="op">=</span> <span class="number">0b100001</span>,
+    <span class="ident">Adc10</span> <span class="op">=</span> <span class="number">0b100010</span>,
+    <span class="ident">Adc11</span> <span class="op">=</span> <span class="number">0b100011</span>,
+    <span class="ident">Adc12</span> <span class="op">=</span> <span class="number">0b100100</span>,
+    <span class="ident">Adc13</span> <span class="op">=</span> <span class="number">0b100101</span>,
+
+    <span class="ident">AdcTemp</span> <span class="op">=</span> <span class="number">0b100111</span>,
+}
+
+<span class="ident">avr_hal_generic</span>::<span class="macro">impl_adc</span><span class="macro">!</span> {
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Adc</span> {
+        <span class="kw">type</span> <span class="ident">ChannelID</span> <span class="op">=</span> <span class="ident">AdcMux</span>;
+        <span class="ident">peripheral</span>: <span class="kw">crate</span>::<span class="ident">pac</span>::<span class="ident">ADC</span>,
+        <span class="ident">set_mux</span>: <span class="op">|</span><span class="ident">peripheral</span>, <span class="ident">id</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">id</span> <span class="kw">as</span> <span class="ident">u8</span>;
+            <span class="ident">peripheral</span>.<span class="ident">admux</span>.<span class="ident">modify</span>(<span class="op">|</span><span class="kw">_</span>, <span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">mux</span>().<span class="ident">bits</span>(<span class="ident">id</span> <span class="op">&amp;</span> <span class="number">0x1f</span>));
+            <span class="ident">peripheral</span>.<span class="ident">adcsrb</span>.<span class="ident">modify</span>(<span class="op">|</span><span class="kw">_</span>, <span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">mux5</span>().<span class="ident">bit</span>(<span class="ident">id</span> <span class="op">&amp;</span> <span class="number">0x20</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>));
+        },
+        <span class="ident">pins</span>: {
+            <span class="ident">pf0</span>: (<span class="ident">PF0</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc0</span>, <span class="ident">didr0</span>::<span class="ident">adc0d</span>),
+            <span class="ident">pf1</span>: (<span class="ident">PF1</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc1</span>, <span class="ident">didr0</span>::<span class="ident">adc1d</span>),
+            <span class="ident">pf4</span>: (<span class="ident">PF4</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc4</span>, <span class="ident">didr0</span>::<span class="ident">adc4d</span>),
+            <span class="ident">pf5</span>: (<span class="ident">PF5</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc5</span>, <span class="ident">didr0</span>::<span class="ident">adc5d</span>),
+            <span class="ident">pf6</span>: (<span class="ident">PF6</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc6</span>, <span class="ident">didr0</span>::<span class="ident">adc6d</span>),
+            <span class="ident">pf7</span>: (<span class="ident">PF7</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc7</span>, <span class="ident">didr0</span>::<span class="ident">adc7d</span>),
+            <span class="ident">pd4</span>: (<span class="ident">PD4</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc8</span>, <span class="ident">didr2</span>::<span class="ident">adc8d</span>),
+            <span class="ident">pd6</span>: (<span class="ident">PD6</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc9</span>, <span class="ident">didr2</span>::<span class="ident">adc9d</span>),
+            <span class="ident">pd7</span>: (<span class="ident">PD7</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc10</span>, <span class="ident">didr2</span>::<span class="ident">adc10d</span>),
+            <span class="ident">pb4</span>: (<span class="ident">PB4</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc11</span>, <span class="ident">didr2</span>::<span class="ident">adc11d</span>),
+            <span class="ident">pb5</span>: (<span class="ident">PB5</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc12</span>, <span class="ident">didr2</span>::<span class="ident">adc12d</span>),
+            <span class="ident">pb6</span>: (<span class="ident">PB6</span>, <span class="ident">AdcMux</span>::<span class="ident">Adc13</span>, <span class="ident">didr2</span>::<span class="ident">adc13d</span>),
+        }
+    }
+}
+
+<span class="doccomment">/// Additional channels</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This module contains ADC channels, additional to the direct pin channels.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">channel</span> {
+    <span class="kw">use</span> <span class="ident">avr_hal_generic</span>::<span class="ident">hal</span>::<span class="ident">adc</span>::<span class="ident">Channel</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">AdcMux</span>;
+
+    <span class="doccomment">/// Channel for the _Bandgap Reference Voltage_</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Vbg</span>;
+    <span class="kw">impl</span> <span class="ident">Channel</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">Adc</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vbg</span> {
+        <span class="kw">type</span> <span class="ident">ID</span> <span class="op">=</span> <span class="ident">AdcMux</span>;
+        <span class="kw">fn</span> <span class="ident">channel</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">ID</span> { <span class="ident">AdcMux</span>::<span class="ident">AdcVbg</span> }
+    }
+
+    <span class="doccomment">/// Channel for _GND_</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Gnd</span>;
+    <span class="kw">impl</span> <span class="ident">Channel</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">Adc</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Gnd</span> {
+        <span class="kw">type</span> <span class="ident">ID</span> <span class="op">=</span> <span class="ident">AdcMux</span>;
+        <span class="kw">fn</span> <span class="ident">channel</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">ID</span> { <span class="ident">AdcMux</span>::<span class="ident">AdcGnd</span> }
+    }
+
+    <span class="doccomment">/// Channel for the built-in _Temperature Sensor_</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Temperature</span>;
+    <span class="kw">impl</span> <span class="ident">Channel</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">Adc</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Temperature</span> {
+        <span class="kw">type</span> <span class="ident">ID</span> <span class="op">=</span> <span class="ident">AdcMux</span>;
+        <span class="kw">fn</span> <span class="ident">channel</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">ID</span> { <span class="ident">AdcMux</span>::<span class="ident">AdcTemp</span> }
+    }
+}
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "atmega32u4_hal";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
