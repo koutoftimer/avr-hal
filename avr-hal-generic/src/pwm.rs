@@ -30,6 +30,45 @@ pub enum Prescaler {
     Prescale1024,
 }
 
+pub trait TimerConf {
+    type WgmMode;
+
+    fn set_wgm(&mut self, value: Self::WgmMode);
+}
+
+#[macro_export]
+macro_rules! impl_wgm_mode {
+    (
+        $(#[$wgm_mode_attr:meta])*
+        pub enum $WgmMode:ident { }
+    ) => {
+        $(#[$wgm_mode_attr])*
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+        #[repr(u8)]
+        pub enum $WgmMode {
+            NormalFfImmediateMax = 0,
+            PwmPcFfTopBottom = 1,
+            CtcOcrImmediateMax = 2,
+            FpwmFfBottomMax = 3,
+            PwmpcOcrTopBottom = 5,
+            FpwmOcrBottomTop = 7,
+        }
+    };
+    (
+        $(#[$wgm_mode_attr:meta])*
+        pub enum $WgmMode:ident {
+            $($Mode:ident = $Value:expr,)+
+        }
+    ) => {
+        $(#[$wgm_mode_attr])*
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+        #[repr(u8)]
+        pub enum $WgmMode {
+            $($Mode = $Value,)+
+        }
+    };
+}
+
 /// Implement traits and types for PWM timers
 #[macro_export]
 macro_rules! impl_pwm {
@@ -37,8 +76,10 @@ macro_rules! impl_pwm {
         $(#[$timer_pwm_attr:meta])*
         pub struct $TimerPwm:ident {
             type Duty: $Duty:ty,
+            type WgmMode: $WgmMode:ty,
             timer: $TIMER:ty,
             init: |$init_timer:ident, $prescaler:ident| $init_block:block,
+            set_wgm: |$set_wgm_timer:ident, $wgm_value:ident| $set_wgm_block:block,
             pins: {$(
                 $port:ident::$PXi:ident: {
                     ocr: $ocr:ident,
@@ -64,6 +105,15 @@ macro_rules! impl_pwm {
                 }
 
                 t
+            }
+        }
+
+        impl TimerConf for $TimerPwm {
+            type WgmMode = $WgmMode;
+
+            fn set_wgm(&mut self, $wgm_value: Self::WgmMode) {
+                let $set_wgm_timer = &self.timer;
+                $set_wgm_block
             }
         }
 

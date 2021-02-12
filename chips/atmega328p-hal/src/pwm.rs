@@ -28,6 +28,10 @@
 use crate::port::{portb, portd};
 pub use avr_hal_generic::pwm::*;
 
+avr_hal_generic::impl_wgm_mode! {
+    pub enum WgmMode0 { }
+}
+
 avr_hal_generic::impl_pwm! {
     /// Use `TC0` for PWM (pins `PD5`, `PD6`)
     ///
@@ -44,6 +48,7 @@ avr_hal_generic::impl_pwm! {
     /// ```
     pub struct Timer0Pwm {
         type Duty: u8,
+        type WgmMode: crate::pwm::WgmMode0,
         timer: crate::pac::TC0,
         init: |tim, prescaler| {
             tim.tccr0a.modify(|_, w| w.wgm0().pwm_fast());
@@ -54,6 +59,10 @@ avr_hal_generic::impl_pwm! {
                 Prescaler::Prescale256 => w.cs0().prescale_256(),
                 Prescaler::Prescale1024 => w.cs0().prescale_1024(),
             });
+        },
+        set_wgm: |tim, value| {
+            tim.tccr0a.modify(|_, w| w.wgm0().bits(value as u8 & 0b011));
+            tim.tccr0b.modify(|_, w| w.wgm02().bit(value as u8 & 0b100 != 0));
         },
         pins: {
             portd::PD6: {
@@ -76,6 +85,28 @@ avr_hal_generic::impl_pwm! {
     }
 }
 
+avr_hal_generic::impl_wgm_mode! {
+    pub enum WgmMode1 {
+        NormalFfffImmediateMax = 0,
+        PwmPc8bitFfTopBottom = 1,
+        PwmPc9bit1ffTopBottom = 2,
+        PwmPc10bit3ffTopBottom = 3,
+        CtcOcrImmediateMax = 4,
+
+        Fpwm8bitFfBottomMax = 5,
+        Fpwm9bit1ffBottomMax = 6,
+        Fpwm10bit3ffBottomMax = 7,
+        PwmPfcIcrBottomBottom = 8,
+        PwmPfcOcrBottomBottom = 9,
+
+        PwmPcIcrTopBottom = 10,
+        PwmPcOcrTopBottom = 11,
+        CtcIcrImmediateMax = 12,
+        FpwmIcrBottomTop = 14,
+        FpwmOcrBottomTop = 15,
+    }
+}
+
 avr_hal_generic::impl_pwm! {
     /// Use `TC1` for PWM (pins `PB1`, `PB2`)
     ///
@@ -92,6 +123,7 @@ avr_hal_generic::impl_pwm! {
     /// ```
     pub struct Timer1Pwm {
         type Duty: u16,
+        type WgmMode: WgmMode1,
         timer: crate::pac::TC1,
         init: |tim, prescaler| {
             tim.tccr1a.modify(|_, w| w.wgm1().bits(0b01));
@@ -105,6 +137,10 @@ avr_hal_generic::impl_pwm! {
                     Prescaler::Prescale1024 => w.cs1().prescale_1024(),
                 }
             });
+        },
+        set_wgm: |tim, value| {
+            tim.tccr1a.modify(|_, w| w.wgm1().bits(value as u8 & 0b0011));
+            tim.tccr1b.modify(|_, w| w.wgm1().bits(value as u8 & 0b1100));
         },
         pins: {
             portb::PB1: {
@@ -127,6 +163,10 @@ avr_hal_generic::impl_pwm! {
     }
 }
 
+avr_hal_generic::impl_wgm_mode! {
+    pub enum WgmMode2 { }
+}
+
 avr_hal_generic::impl_pwm! {
     /// Use `TC2` for PWM (pins `PB3`, `PD3`)
     ///
@@ -144,6 +184,7 @@ avr_hal_generic::impl_pwm! {
     /// ```
     pub struct Timer2Pwm {
         type Duty: u8,
+        type WgmMode: WgmMode2,
         timer: crate::pac::TC2,
         init: |tim, prescaler| {
             tim.tccr2a.modify(|_, w| w.wgm2().pwm_fast());
@@ -154,6 +195,10 @@ avr_hal_generic::impl_pwm! {
                 Prescaler::Prescale256 => w.cs2().prescale_256(),
                 Prescaler::Prescale1024 => w.cs2().prescale_1024(),
             });
+        },
+        set_wgm: |tim, value| {
+            tim.tccr2a.modify(|_, w| w.wgm2().bits(value as u8 & 0b011));
+            tim.tccr2b.modify(|_, w| w.wgm22().bit(value as u8 & 0b100 != 0));
         },
         pins: {
             portb::PB3: {
